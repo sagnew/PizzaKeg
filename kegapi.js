@@ -13,7 +13,7 @@ function getDrinks(callback) {
 }
 
 //filters out drinks older than 30 minutes
-function getRecentDrinks(drinks, callback) {
+function filterRecentDrinks(drinks, callback) {
   var currentTime = moment();
   var recentDrinks = [];
   for(var i = 0; i < drinks.length; i++) {
@@ -39,7 +39,7 @@ function addDrinkVolumes(drinks, callback) {
 
 module.exports = { 
   getDrinks: getDrinks,
-  getRecentDrinks: getRecentDrinks,
+  filterRecentDrinks: filterRecentDrinks,
   addDrinkVolume: addDrinkVolumes
 };
 
