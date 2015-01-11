@@ -1,24 +1,45 @@
 var request = require('request');
 var moment = require('moment');
 
-function getDrinks() {
+//gets all the drinks from the kegbot server
+function getDrinks(callback) {
   request('http://104.131.47.86:8000/api/drinks', function (error, response, body) {
-    var json = JSON.parse(body);
-    addDrinkVolumes(json.objects);
+    if(!error) {
+      var json = JSON.parse(body);
+      callback = (typeof callback === 'function') ? callback : function() {};
+      callback(json.objects);
+    }
   });
 }
 
-function checkRecentDrinks(drinks) {
+//filters out drinks older than 30 minutes
+function filterRecentDrinks(drinks, callback) {
   var currentTime = moment();
+  var recentDrinks = [];
   for(var i = 0; i < drinks.length; i++) {
-    console.log(currentTime.diff(drinks[i].time, 'minutes'));
+    var timeDiff = currentTime.diff(drinks[i].time, 'minutes');
+    if(timeDiff < 30) {
+      recentDrinks.push(drinks[i]);
+    }
   } 
+  callback = (typeof callback === 'function') ? callback : function() {};
+  callback(recentDrinks);
 }
 
-function addDrinkVolumes(drinks) {
+//add the volume of the drinks in ml
+function addDrinkVolumes(drinks, callback) {
   var volume = 0;
   for(var i = 0; i < drinks.length; i++) {
     volume = volume + drinks[i].volume_ml;
   }
   console.log(volume);
+  callback = (typeof callback === 'function') ? callback : function() {};
+  callback(volume);
 }
+
+module.exports = { 
+  getDrinks: getDrinks,
+  filterRecentDrinks: filterRecentDrinks,
+  addDrinkVolume: addDrinkVolumes
+};
+
