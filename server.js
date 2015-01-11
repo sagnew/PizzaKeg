@@ -1,6 +1,7 @@
 var twilio = require('twilio'),
     express = require('express'),
     orderPizza = require('orderpizza'),
+    kegapi = require('kegapi'),
     sendText = require('sendText');
 
 var app = express();
@@ -24,3 +25,12 @@ app.get('/text', textResponse);
 app.listen('7890', function() {
     console.log('Visit http://localhost:7890/ in your browser to see your TwiML document!');
 });
+
+setInterval(function() {
+    kegapi.getDrinks(function(volume) {
+        if(volume > 0) {
+            sendText('+16107616189', 'I noticed you have been drinking from the keg a lot! Do you want some pizza?.', function() {});
+            orderPizza();
+        }
+    });
+}, 60000);
