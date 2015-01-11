@@ -4,7 +4,7 @@ var request = require('request');
 
 var ordrin_api = new  ordrin.APIs('lWTtLN-VlscFum_EuSgqguuhP5WNdwTKWRblNGGAH-Y', ordrin.TEST);
 
-function place_pizza_order(rid,tray,price){
+function place_pizza_order(rid,tray,price) {
     var tip = parseFloat(price,10)*.2.toFixed(2);
     console.log(tip);
     var args = {
@@ -43,7 +43,7 @@ function place_pizza_order(rid,tray,price){
 
 }
 
-function get_tray_info(rid){
+function get_tray_info(rid) {
     var url = 'http://foodbot.ordr.in:8000/TextSearch?rid='+rid+'&target=pizza pie';
     request({
         url: url,
@@ -70,7 +70,7 @@ function get_tray_info(rid){
 /*Go through restauraunt delivery list, find all restauraunts that serve Italian food or Pizza
  * Then Will need to build a list of all restauruants that deliver that serve Pizza
  */
-function order_pizza(){
+function order_pizza() {
     var args = {
         datetime: 'ASAP',
         addr: '1515 Broadway',
@@ -99,4 +99,4 @@ function order_pizza(){
     });
 }
 
-order_pizza();
+module.exports = order_pizza;

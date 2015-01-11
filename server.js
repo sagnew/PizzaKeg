@@ -1,5 +1,7 @@
 var twilio = require('twilio'),
-    express = require('express');
+    express = require('express'),
+    orderPizza = require('orderpizza'),
+    sendText = require('sendText');
 
 var app = express();
 
