@@ -19,7 +19,7 @@ function getRecentDrinks(drinks, callback) {
     }
   } 
   callback = (typeof callback === 'function') ? callback : function() {};
-  callback();
+  callback(recentDrinks);
 }
 
 function addDrinkVolumes(drinks, callback) {
