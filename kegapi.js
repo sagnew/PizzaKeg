@@ -7,7 +7,7 @@ function getDrinks(callback) {
     if(!error) {
       var json = JSON.parse(body);
       callback = (typeof callback === 'function') ? callback : function() {};
-      callback(json.objects);
+      filterRecentDrinks(json.objects, callback); 
     }
   });
 }
@@ -17,13 +17,13 @@ function filterRecentDrinks(drinks, callback) {
   var currentTime = moment();
   var recentDrinks = [];
   for(var i = 0; i < drinks.length; i++) {
-    var timeDiff = currentTime.diff(drinks[i].time, 'minutes');
-    if(timeDiff < 30) {
+    var timeDiff = currentTime.diff(drinks[i].time, 'seconds');
+    if(timeDiff < 60) {
       recentDrinks.push(drinks[i]);
     }
   } 
   callback = (typeof callback === 'function') ? callback : function() {};
-  callback(recentDrinks);
+  addDrinkVolumes(recentDrinks, callback);
 }
 
 //add the volume of the drinks in ml
@@ -32,7 +32,6 @@ function addDrinkVolumes(drinks, callback) {
   for(var i = 0; i < drinks.length; i++) {
     volume = volume + drinks[i].volume_ml;
   }
-  console.log(volume);
   callback = (typeof callback === 'function') ? callback : function() {};
   callback(volume);
 }
@@ -43,3 +42,4 @@ module.exports = {
   addDrinkVolume: addDrinkVolumes
 };
 
+getDrinks(function(volume){console.log(volume);});
