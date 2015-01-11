@@ -17,7 +17,7 @@ function filterRecentDrinks(drinks, callback) {
   var currentTime = moment();
   var recentDrinks = [];
   for(var i = 0; i < drinks.length; i++) {
-    var timeDiff = currentTime.diff(drinks[i].time, 'minutes')
+    var timeDiff = currentTime.diff(drinks[i].time, 'minutes');
     if(timeDiff < 30) {
       recentDrinks.push(drinks[i]);
     }
