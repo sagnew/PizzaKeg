@@ -1,6 +1,7 @@
 var request = require('request');
 var moment = require('moment');
 
+//gets all the drinks from the kegbot server
 function getDrinks(callback) {
   request('http://104.131.47.86:8000/api/drinks', function (error, response, body) {
     if(!error) {
@@ -11,6 +12,7 @@ function getDrinks(callback) {
   });
 }
 
+//filters out drinks older than 30 minutes
 function getRecentDrinks(drinks, callback) {
   var currentTime = moment();
   var recentDrinks = [];
@@ -24,6 +26,7 @@ function getRecentDrinks(drinks, callback) {
   callback(recentDrinks);
 }
 
+//add the volume of the drinks in ml
 function addDrinkVolumes(drinks, callback) {
   var volume = 0;
   for(var i = 0; i < drinks.length; i++) {
