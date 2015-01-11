@@ -4,30 +4,32 @@ var request = require('request');
 
 var ordrin_api = new  ordrin.APIs('lWTtLN-VlscFum_EuSgqguuhP5WNdwTKWRblNGGAH-Y', ordrin.TEST);
 
-
 function place_pizza_order(rid,tray,price){
     var args = {
-        rid: rid,
+        rid: rid.toString(),
         em: 'sam@slam-minded.org',
         tray: tray,
-        tip: (parseFloat(price,10)*.2).toString(),
+        //tip: (parseFloat(price,10)*.2).toString(),
+        tip: '1.39',
         first_name: 'Slammin',
         last_name: 'Sammy',
         phone: '6666666666',
+        zip: '08901',
         addr: '31 High Street',
         city: 'New Brunswick',
-        zip: '08901',
+        state: 'NJ',
         card_name: 'Slammin Sammy',
         card_number: '000000000000000',
         card_cvc: '123',
         card_expiry: '06/2006',
         card_bill_addr: '31 High Street',
         card_bill_city: 'New Brunswick',
-        card_bill_state: 'New Jersey',
+        card_bill_state: 'NJ',
         card_bill_zip: '08901',
         card_bill_phone: '5555555555',
         delivery_date: 'ASAP'
     };
+    console.log(args);
     ordrin_api.order_guest(args, function(error,data){
         if(error){
             console.log(error);
@@ -41,15 +43,20 @@ function place_pizza_order(rid,tray,price){
 }
 
 function get_tray_info(rid){
-    var url = 'http://foodbot.ordr.in:8000/TextesttSearch?rid='+rid+'&target=pie';
+    console.log(rid);
+    var url = 'http://foodbot.ordr.in:8000/TextSearch?rid='+rid+'&target=pie';
     request({
         url: url,
         json: true
     }, function (error, response, body) {
         if (!error && response.statusCode === 200) {
-            tray = body[0]['tray'];
-            price = body[0]['price'];
+            tray = body[0].tray;
+            price = body[0].price;
             place_pizza_order(rid,tray,price);
+            console.log([tray,price]);
+        }
+        else{
+            console.log(error);
         }
     });
 
@@ -84,3 +91,4 @@ function order_pizza(){
     });
 }
 
+order_pizza();
