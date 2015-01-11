@@ -9,10 +9,14 @@ function getDrinks(callback) {
   });
 }
 
-function checkRecentDrinks(drinks, callback) {
+function getRecentDrinks(drinks, callback) {
   var currentTime = moment();
+  var recentDrinks = [];
   for(var i = 0; i < drinks.length; i++) {
-    console.log(currentTime.diff(drinks[i].time, 'minutes'));
+    var timeDiff = currentTime.diff(drinks[i].time, 'minutes')
+    if(timeDiff < 30) {
+      recentDrinks.push(drinks[i]);
+    }
   } 
   callback = (typeof callback === 'function') ? callback : function() {};
   callback();
@@ -28,4 +32,3 @@ function addDrinkVolumes(drinks, callback) {
   callback(volume);
 }
 
-getDrinks(addDrinkVolumes);
