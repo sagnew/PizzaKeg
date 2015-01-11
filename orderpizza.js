@@ -17,7 +17,6 @@ ordrin_api.delivery_list(args,function(error,restaurants){
     for(index in restaurants){
         //Takes the intersection bewteen the cusines for each restauruant and the var cuisines
         //( ͡° ͜ʖ ͡°)
-        //( ͡° ͜ʖ ͡°)
         if(array(array(restaurants[index].cu).intersect(cuisines))._value.length >=1){
             if(!restaurants[index].is_delivering){
                 relative_rids.push(restaurants[index].id);
