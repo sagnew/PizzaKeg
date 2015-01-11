@@ -9,20 +9,18 @@ var args = {
     zip: '08901'
 };
 
-
 /*Go through restauraunt delivery list, find all restauraunts that serve Italian food or Pizza
  * Then Will need to build a list of all restauruants that deliver that serve Pizza
  */
 ordrin_api.delivery_list(args,function(error,restaurants){
-    var cuisines = ['Italian','Pizza'];
-    relative_rids = []
+    var cuisines = ['Italian','Pizza'], relative_rids = [];
     for(index in restaurants){
         //Takes the intersection bewteen the cusines for each restauruant and the var cuisines
         //( ͡° ͜ʖ ͡°)
         //( ͡° ͜ʖ ͡°)
         if(array(array(restaurants[index].cu).intersect(cuisines))._value.length >=1){
             if(!restaurants[index].is_delivering){
-                relative_rids.push(restaurants[index].id)
+                relative_rids.push(restaurants[index].id);
             }
         }
     }
