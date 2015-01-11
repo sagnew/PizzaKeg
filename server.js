@@ -1,8 +1,8 @@
 var twilio = require('twilio'),
     express = require('express'),
-    orderPizza = require('orderpizza'),
-    kegapi = require('kegapi'),
-    sendText = require('sendText');
+    orderPizza = require('./orderpizza'),
+    kegapi = require('./kegapi'),
+    sendText = require('./sendText');
 
 var app = express();
 
