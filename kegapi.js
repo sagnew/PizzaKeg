@@ -3,9 +3,11 @@ var moment = require('moment');
 
 function getDrinks(callback) {
   request('http://104.131.47.86:8000/api/drinks', function (error, response, body) {
-    var json = JSON.parse(body);
-    callback = (typeof callback === 'function') ? callback : function() {};
-    callback(json.objects);
+    if(!error) {
+      var json = JSON.parse(body);
+      callback = (typeof callback === 'function') ? callback : function() {};
+      callback(json.objects);
+    }
   });
 }
 
