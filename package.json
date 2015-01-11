@@ -1,0 +1,20 @@
+{
+  "name": "PizzaKeg",
+  "version": "0.0.0",
+  "description": "A kegerator that orders pizza for your party",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sagnew/PizzaKeg.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sagnew/PizzaKeg/issues"
+  },
+  "homepage": "https://github.com/sagnew/PizzaKeg"
+}
