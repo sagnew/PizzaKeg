@@ -41,5 +41,3 @@ module.exports = {
   filterRecentDrinks: filterRecentDrinks,
   addDrinkVolume: addDrinkVolumes
 };
-
-getDrinks(function(volume){console.log(volume);});
