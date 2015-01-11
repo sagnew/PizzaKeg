@@ -35,8 +35,8 @@ function addDrinkVolumes(drinks, callback) {
 }
 
 module.exports = { 
-  'getDrinks': getDrinks,
-  'getRecentDrinks': getRecentDrinks,
-  'addDrinkVolume': addDrinkVolumes
+  getDrinks: getDrinks,
+  getRecentDrinks: getRecentDrinks,
+  addDrinkVolume: addDrinkVolumes
 };
 
