@@ -5,14 +5,12 @@ var request = require('request');
 var ordrin_api = new  ordrin.APIs('lWTtLN-VlscFum_EuSgqguuhP5WNdwTKWRblNGGAH-Y', ordrin.TEST);
 
 function place_pizza_order(rid,tray,price) {
-    var tip = parseFloat(price,10)*.2.toFixed(2);
-    console.log(tip);
     var args = {
         rid: rid.toString(),
         em: 'detox27@gmail.com',
         tray: tray,
-        //tip: (parseFloat(price,10)*.2).round(2).toString(),
-        tip: '6.66',
+        //tip: '6.66',
+        tip: (parseFloat(price,10)*.2).toFixed(2).toString(),
         first_name: 'Slammin',
         last_name: 'Sammy',
         phone: '6666666666',
@@ -31,6 +29,7 @@ function place_pizza_order(rid,tray,price) {
         card_bill_phone: '5555555555',
         delivery_date: 'ASAP'
     };
+    console.log(args.tip);
     ordrin_api.order_guest(args, function(error,data){
         if(error){
             console.log(error);
@@ -84,7 +83,6 @@ function order_pizza() {
             //Takes the intersection bewteen the cuisines for each restauruant and the var cuisines
             //( ͡° ͜ʖ ͡°)
             //( ͡° ͜ʖ ͡°)
-            //console.log(array(restaurants[index].cu);
             if(restaurants[index].hasOwnProperty('cu')){
                 if(array(array(restaurants[index].cu).intersect(cuisines))._value.length >=1){
                     relative_rids.push(restaurants[index].id);
@@ -92,11 +90,12 @@ function order_pizza() {
             }
         }
         var rand_rid_index = Object.keys(relative_rids)[Math.floor(Math.random()*relative_rids.length)];
-        console.log(relative_rids[rand_rid_index]);
         var rid = relative_rids[rand_rid_index];
+        console.log(rid);
         get_tray_info(rid);
 
     });
 }
 
-module.exports = order_pizza;
+order_pizza();
+//module.exports = order_pizza;
