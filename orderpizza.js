@@ -4,6 +4,9 @@ var request = require('request');
 
 var ordrin_api = new  ordrin.APIs('lWTtLN-VlscFum_EuSgqguuhP5WNdwTKWRblNGGAH-Y', ordrin.TEST);
 
+/*This function places the order with the given restaurnt id and tray.
+ * It also calculates a tip on the fly based on 20% gratuity with the given price.
+ */
 function place_pizza_order(rid,tray,price) {
     var args = {
         rid: rid.toString(),
@@ -29,7 +32,6 @@ function place_pizza_order(rid,tray,price) {
         card_bill_phone: '5555555555',
         delivery_date: 'ASAP'
     };
-    console.log(args.tip);
     ordrin_api.order_guest(args, function(error,data){
         if(error){
             console.log(error);
@@ -42,6 +44,12 @@ function place_pizza_order(rid,tray,price) {
 
 }
 
+/*This function takes the given restaurant id and passes it to the ordrin foodbot TextSearch endpoint.
+ * The target variable in the query string represents the string we're searching for. In this case we are
+ * ordering a pizza so we take the first tray item that exists since this request yields the most relevant
+ * items first. This function then passes the tray item, price, and restaurant id to the place_pizza_order
+ * function.
+ */
 function get_tray_info(rid) {
     var url = 'http://foodbot.ordr.in:8000/TextSearch?rid='+rid+'&target=pizza pie';
     request({
@@ -54,7 +62,6 @@ function get_tray_info(rid) {
                     tray = body[i].tray;
                     price = body[i].price;
                     place_pizza_order(rid,tray,price);
-                    console.log([tray,price]);
                     break;
                 }
             }
@@ -66,8 +73,9 @@ function get_tray_info(rid) {
 
 }
 
-/*Go through restauraunt delivery list, find all restauraunts that serve Italian food or Pizza
- * Then Will need to build a list of all restauruants that deliver that serve Pizza
+/*This function sends a request to the Ordrin delivery list endpoint in order to get
+ * all the piza serving restaurants that deliver to the given address. It then picks a random restaurant
+ * from this list and passes the restaurant id to the get_tray_info function which is used to build the order
  */
 function order_pizza() {
     var args = {
@@ -91,11 +99,9 @@ function order_pizza() {
         }
         var rand_rid_index = Object.keys(relative_rids)[Math.floor(Math.random()*relative_rids.length)];
         var rid = relative_rids[rand_rid_index];
-        console.log(rid);
         get_tray_info(rid);
 
     });
 }
 
-order_pizza();
-//module.exports = order_pizza;
+module.exports = order_pizza;
